@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using OfficeOpenXml;
 using StatysticalAnalysisApp.Services;
 
 namespace StatysticalAnalysisApp
@@ -35,5 +37,29 @@ namespace StatysticalAnalysisApp
             AnalyzerFactory.CreateAnalyzer(variant).DrawChart(data, chart, N);
             labelResult.Text = AnalyzerFactory.CreateAnalyzer(variant).Analyse(data);
         }
+        private DataTable LoadExcelData(string filePath)
+        {
+            ExcelPackage.License.SetNonCommercialOrganization("My Noncommercial organization");
+            using (var package = new ExcelPackage(new FileInfo(filePath)))
+            {
+                var worksheet = package.Workbook.Worksheets[0];
+                DataTable dt = new DataTable();
+
+                // Заголовки столбцов
+                for (int col = 1; col <= worksheet.Dimension.End.Column; col++)
+                    dt.Columns.Add(worksheet.Cells[1, col].Text);
+
+                // Данные
+                for (int row = 2; row <= worksheet.Dimension.End.Row; row++)
+                {
+                    DataRow dr = dt.NewRow();
+                    for (int col = 1; col <= worksheet.Dimension.End.Column; col++)
+                        dr[col - 1] = worksheet.Cells[row, col].Text;
+                    dt.Rows.Add(dr);
+                }
+                return dt;
+            }
+        }
+
     }
 }
