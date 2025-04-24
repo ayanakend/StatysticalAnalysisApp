@@ -14,7 +14,7 @@ namespace StatysticalAnalysisApp.Analyzers
         {
             // 1. Анализ улучшения состояния дорог
             var regions = data.AsEnumerable()
-                .GroupBy(row => row["Субъект РФ"].ToString())
+                .GroupBy(row => row["Регион"].ToString())
                 .Select(g => new
                 {
                     Region = g.Key,
@@ -34,7 +34,7 @@ namespace StatysticalAnalysisApp.Analyzers
             // 2. Прогнозирование для каждого региона
             StringBuilder forecastResult = new StringBuilder();
             var allRegions = data.AsEnumerable()
-                .GroupBy(row => row["Субъект РФ"].ToString());
+                .GroupBy(row => row["Регион"].ToString());
 
             foreach (var region in allRegions)
             {
@@ -69,7 +69,7 @@ namespace StatysticalAnalysisApp.Analyzers
         {
             chart.Series.Clear();
             var regions = data.AsEnumerable()
-                .GroupBy(row => row["Субъект РФ"].ToString());
+                .GroupBy(row => row["Регион"].ToString());
 
             // Настройки графика
             chart.ChartAreas[0].AxisX.Title = "Год";
@@ -124,7 +124,7 @@ namespace StatysticalAnalysisApp.Analyzers
         public override string Analyse(DataTable data)
         {
             var regions = data.AsEnumerable()
-                .GroupBy(row => row["Субъект РФ"].ToString())
+                .GroupBy(row => row["Регион"].ToString())
                 .Select(g => new
                 {
                     Region = g.Key,
