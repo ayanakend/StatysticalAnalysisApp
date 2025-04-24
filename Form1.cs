@@ -23,5 +23,17 @@ namespace StatysticalAnalysisApp
         {
             LoadDataForSelectedVariant();
         }
+        private void LoadDataForSelectedVariant()
+        {
+            if (comboBoxDataset.SelectedItem == null) return;
+
+            int variant = int.Parse(comboBoxDataset.SelectedItem.ToString().Split(':')[0]);
+            DataTable data = LoadExcelData(GetFilePathForVariant(variant));
+            dataGridView.DataSource = data;
+            // Получаем значение N из textBoxN
+            int N = 0;
+            AnalyzerFactory.CreateAnalyzer(variant).DrawChart(data, chart, N);
+            labelResult.Text = AnalyzerFactory.CreateAnalyzer(variant).Analyse(data);
+        }
     }
 }
