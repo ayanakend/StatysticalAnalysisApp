@@ -92,6 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Analyzers\AnalyzerBase.cs" />
+    <Compile Include="Analyzers\InflationAnalyzer.cs" />
     <Compile Include="Analyzers\PopulationAnalyzer.cs" />
     <Compile Include="Analyzers\RoadsAnalyzer.cs" />
     <Compile Include="Form1.cs">

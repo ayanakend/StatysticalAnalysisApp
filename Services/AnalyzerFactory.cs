@@ -9,7 +9,7 @@ namespace StatysticalAnalysisApp.Services
             switch (variant)
             {
                 case 10:
-                  //return new InflationAnalyzer();
+                    return new InflationAnalyzer();
                 case 14:
                     return new PopulationAnalyzer();
                 case 16:
